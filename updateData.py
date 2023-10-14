@@ -2,8 +2,13 @@ import xlwings as xw
 import mergeData
 import time
 
+<<<<<<< HEAD
 old_file_path = r"old.xlsx"
 update_file_path = r"update.xlsx"
+=======
+old_file_path = r"C:\Users\lenovo\Desktop\MissionMerge\原神全 NPC 委托、轮次统计表.xlsx"
+update_file_path = r"C:\Users\lenovo\Desktop\MissionMerge\原神全 NPC 委托、轮次统计表（4.1 已更新）.xlsx"
+>>>>>>> 3ecc40d252d61a6d75110012d3b83f1f44905af1
 output_file_path = './output_file.xlsx'
 
 debug_state = False
