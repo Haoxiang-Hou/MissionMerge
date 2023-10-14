@@ -1,25 +1,45 @@
 import xlwings as xw
 import mergeData
 import time
+import argparse
 
-<<<<<<< HEAD
-old_file_path = r"old.xlsx"
-update_file_path = r"update.xlsx"
-=======
-old_file_path = r"C:\Users\lenovo\Desktop\MissionMerge\原神全 NPC 委托、轮次统计表.xlsx"
-update_file_path = r"C:\Users\lenovo\Desktop\MissionMerge\原神全 NPC 委托、轮次统计表（4.1 已更新）.xlsx"
->>>>>>> 3ecc40d252d61a6d75110012d3b83f1f44905af1
-output_file_path = './output_file.xlsx'
+old_file_path = './old.xlsx'
+update_file_path = './update.xlsx'
+output_file_path = './new.xlsx'
 
-debug_state = False
 region_list = ['蒙德', '璃月', '稻妻', '须弥', '枫丹']
 
+def read_args():
+    # 接受参数
+    # -d，开启debug模式，默认关闭，加入后设置debug_state为True
+    # -o，指定old_file的路径，默认为./old.xlsx
+    # -u，指定update_file的路径，默认为./update.xlsx
+    # -n，指定output_file的路径，默认为./new.xlsx
+    parser = argparse.ArgumentParser(description='更新数据')
+    parser.add_argument('-d', '--debug', action='store_true', help='开启debug模式')
+    parser.add_argument('-o', '--old', default='./old.xlsx', help='指定old_file的路径，默认为./old.xlsx')
+    parser.add_argument('-u', '--update', default='./update.xlsx', help='指定update_file的路径，默认为./update.xlsx')
+    parser.add_argument('-n', '--output', default='./new.xlsx', help='指定output_file的路径，默认为./new.xlsx')
+    args = parser.parse_args()
+    
+    global debug_state
+    global old_file_path
+    global update_file_path
+    global output_file_path
+    debug_state = args.debug
+    old_file_path = args.old
+    update_file_path = args.update
+    output_file_path = args.output
+    
+    return args
 
 if __name__ == '__main__':
+    args = read_args()
     start_time = time.time()
     last_time = start_time
     current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     print(current_time, '开始更新数据...')
+    
     with xw.App(visible=debug_state, add_book=False) as app:
         # 复制update_file到output_file，保持原有的sheet顺序，数据格式、颜色等不变
         output_file = app.books.open(update_file_path)
